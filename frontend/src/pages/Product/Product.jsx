@@ -10,14 +10,18 @@ const Product = () => {
   const { all_product } = useContext(ShopContext)
   const { productId } = useParams()
   const product = all_product.find((e) => e.id === Number(productId))
-  return (
-    <div> 
-      <Breadcrums product={product}/>
-      <ProductDisplay product={product}/>
-      <DescriptionBox />
-      <RelatedProducts/>
-    </div>
-  )
+  if(product){
+    return (
+      <div> 
+        <Breadcrums product={product}/>
+        <ProductDisplay product={product}/>
+        <DescriptionBox />
+        <RelatedProducts/>
+      </div>
+    )
+  }else{
+    return null
+  }
 }
 
 export default Product

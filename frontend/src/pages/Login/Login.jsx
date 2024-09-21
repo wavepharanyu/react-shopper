@@ -18,7 +18,7 @@ const Login = () => {
     event.preventDefault()
     let response = await axios.post("http://localhost:4000/api/user/login", formData)
     if(response.data.success){
-      localStorage.setItem("auth-token", response.data.token)
+      localStorage.setItem("authToken", response.data.token)
       window.location.replace('/')
     }else{
         alert(response.data.message)
@@ -29,7 +29,7 @@ const Login = () => {
     event.preventDefault()
     let response = await axios.post("http://localhost:4000/api/user/signup", formData)
     if(response.data.success){
-      localStorage.setItem("auth-token", response.data.token)
+      localStorage.setItem("authToken", response.data.token)
       window.location.replace('/')
     }else{
         alert(response.data.message)

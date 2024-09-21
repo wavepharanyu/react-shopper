@@ -21,20 +21,40 @@ const ShopContextProvider = (props) => {
         setAllProduct(response.data)
     }
 
+    const fetchCart = async() => {
+        let response = await axios.post('http://localhost:4000/api/cart/getcart', {}, { headers: { 'authToken' : localStorage.getItem('authToken') }})
+        setCartItems(response.data)
+    }
+
     useEffect(() => {
-        fetchProducts()
+        async function loadData() {
+            await fetchProducts()
+            if(localStorage.getItem("authToken")){
+                await fetchCart()
+            }
+        }
+        loadData()
     },[])
 
-    const addToCart = (itemId) => {
+    const addToCart = async(itemId) => {
         setCartItems((prev) => ({...prev,[itemId]: prev[itemId] + 1 }))
+        if(localStorage.getItem('authToken')){
+            await axios.post('http://localhost:4000/api/cart/addtocart', {itemId}, { headers: { 'authToken' : localStorage.getItem('authToken') } })
+        }
     }
 
-    const removeFromCart = (itemId) => {
+    const removeFromCart = async(itemId) => {
         setCartItems((prev) => ({...prev,[itemId]: prev[itemId] - 1 }))
+        if(localStorage.getItem('authToken')){
+            await axios.post('http://localhost:4000/api/cart/removefromcart', {itemId}, { headers: { 'authToken' : localStorage.getItem('authToken') } })
+        }
     }
 
-    const clearFromCart = (itemId) => {
+    const clearFromCart = async(itemId) => {
         setCartItems((prev) => ({...prev,[itemId]: 0 }))
+        if(localStorage.getItem('authToken')){
+            await axios.post('http://localhost:4000/api/cart/clearfromcart', {itemId}, { headers: { 'authToken' : localStorage.getItem('authToken') } })
+        }
     }
 
     const getTotalCartAmount = () => {

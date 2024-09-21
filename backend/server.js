@@ -5,6 +5,7 @@ import 'dotenv/config'
 import { connectDB } from "./config/db.js"
 import productRouter from './routes/productRoute.js'
 import userRouter from "./routes/userRoute.js";
+import cartRouter from "./routes/cartRoute.js";
 
 const port = 4000;
 const app = express()
@@ -16,6 +17,7 @@ connectDB()
 
 app.use('/api/product', productRouter)
 app.use('/api/user', userRouter)
+app.use('/api/cart', cartRouter)
 app.use('/images', express.static('uploads/images'))
 
 app.get('/', (req,res) => {
