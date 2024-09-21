@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './NewCollections.css'
 import Item from "../Item/Item"
-import new_collections from './../../assets/new_collections';
+import axios from 'axios'
 
 const NewCollections = () => {
+  const [new_collections, setNewCollection] = useState([])
+
+  const fetchNewCollections = async() => {
+    let response = await axios.get('http://localhost:4000/api/product/newcollection')
+    setNewCollection(response.data)
+  }
+
+  useEffect(() => {
+    fetchNewCollections()
+  },[])
   return (
     <div className="new-collections">
         <h1>NEW COLLECTIONS</h1>

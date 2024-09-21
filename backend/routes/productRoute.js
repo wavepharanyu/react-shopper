@@ -1,5 +1,5 @@
 import express from "express";
-import { uploadImage, addProduct, removeProduct, getAllProducts } from "../controllers/productController.js";
+import { addProduct, removeProduct, getAllProducts, getNewCollection, getWomenPopular } from "../controllers/productController.js";
 import multer from 'multer'
 import path from 'path'
 
@@ -18,5 +18,7 @@ const upload = multer({storage: storage})
 productRouter.post("/add", upload.single("image"), addProduct)
 productRouter.post("/remove", removeProduct)
 productRouter.get("/all", getAllProducts)
+productRouter.get("/newcollection", getNewCollection)
+productRouter.get("/popularinwomen", getWomenPopular)
 
 export default productRouter;

@@ -61,4 +61,26 @@ const getAllProducts = async(req,res) => {
     } 
 }
 
-export { uploadImage, addProduct, removeProduct, getAllProducts }
+const getNewCollection = async(req,res) => {
+    try {
+        let products = await Product.find({})
+        let newCollection = products.slice(1).slice(-8)
+        res.json(newCollection)
+    } catch (error) {
+        console.log(error)
+        res.json({success: false, message: "Error"})
+    } 
+}
+
+const getWomenPopular = async(req,res) => {
+    try {
+        let products = await Product.find({ category: 'women' })
+        let popularData = products.slice(0,4)
+        res.json(popularData)
+    } catch (error) {
+        console.log(error)
+        res.json({success: false, message: "Error"})
+    } 
+}
+
+export { uploadImage, addProduct, removeProduct, getAllProducts, getNewCollection, getWomenPopular }
