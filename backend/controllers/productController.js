@@ -1,4 +1,5 @@
 import Product from "../models/productModel.js";
+import fs from 'fs'
 
 const uploadImage = async(req, res) => {
 
@@ -43,7 +44,12 @@ const addProduct = async(req, res) => {
 
 const removeProduct = async(req,res) => {
     try {
+        const product = await Product.find({ id: req.body.id});
+        let imgFile = product[0].image.split('/')[4]
+        fs.unlink(`uploads/images/${imgFile}`, () => {})
+
         await Product.findOneAndDelete({ id: req.body.id })
+
         res.json({success: true, message: "Product Removed"})
     } catch (error) {
         console.log(error)
