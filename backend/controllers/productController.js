@@ -1,7 +1,7 @@
 import Product from "../models/productModel.js";
 
 const uploadImage = async(req, res) => {
-    let image_filename = `${req.file.filename}`;
+
 
     try {
         res.json({success: true, image_url: `http://localhost:${process.env.port}/images/${image_filename}`})
@@ -12,6 +12,8 @@ const uploadImage = async(req, res) => {
 }
 
 const addProduct = async(req, res) => {
+    let image_filename = `${req.file.filename}`;
+    let image_url = `http://localhost:${process.env.port}/images/${image_filename}`
     let products = await Product.find({})
     let id;
     if(products.length > 0){
@@ -24,7 +26,7 @@ const addProduct = async(req, res) => {
     const product = new Product({
         id: id,
         name: req.body.name,
-        image: req.body.image,
+        image: image_url,
         category: req.body.category,
         new_price: req.body.new_price,
         old_price: req.body.old_price,
