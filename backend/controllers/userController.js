@@ -10,7 +10,7 @@ const signup = async(req,res) => {
     try {
         let check = await User.findOne({email: req.body.email})
         if(check){
-            return res.status(400).json({ success: false,  errors: "existing user found with same email address"})
+            return res.json({ success: false,  message: "existing user found with same email address"})
         }
         let cart = {}
         for(let i = 0; i < 300; i++){
